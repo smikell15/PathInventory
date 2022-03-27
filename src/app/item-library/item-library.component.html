@@ -1,0 +1,82 @@
+<app-header></app-header>
+
+<div id="ngView">
+  <h1 class="mat-h1">Item Library</h1>
+  <div>
+  <button mat-flat-button color="primary">Create New Item</button>
+    <mat-form-field appearance="standard" class="searchField">
+      <mat-label>Search</mat-label>
+      <input matInput id="searchInput" [(ngModel)]="searchValue" (keyup)="searchAndFilterList()" placeholder="Search"/>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field appearance="standard" class="dropdownFilter">
+      <mat-label>Category</mat-label>
+      <mat-select id="categoryFilter" (selectionChange)="searchAndFilterList()" multiple [(ngModel)]="selectedCategories">
+        <mat-option *ngFor="let category of categoryKeys" [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" class="dropdownFilter">
+      <mat-label>Rarity</mat-label>
+      <mat-select id="rarityFilter" (selectionChange)="searchAndFilterList()" multiple [(ngModel)]="selectedRarities">
+        <mat-option *ngFor="let rarity of rarityKeys" [value]="rarity">
+          {{rarity}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" class="dropdownFilter">
+      <mat-label>Min. Level</mat-label>
+      <input matInput id="minLevelFilter" (keyup)="searchAndFilterList()"  [(ngModel)]="minLevel" type="number" min="0" max="20" step="1" />
+    </mat-form-field>
+
+      <mat-form-field appearance="standard" class="dropdownFilter">
+        <mat-label>Max. Level</mat-label>
+        <input matInput id="maxLevelFilter" (keyup)="searchAndFilterList()" [(ngModel)]="maxLevel" type="number" min="0" max="20" step="1" />
+      </mat-form-field>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" aria-label="Table of Items" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef id="libraryItemName"> Name </th>
+      <td mat-cell *matCellDef="let libraryItem"> {{libraryItem.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef id="libraryItemDescription"> Description </th>
+      <td mat-cell *matCellDef="let libraryItem"> {{libraryItem.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef id="libraryItemValue"> Value </th>
+      <td mat-cell *matCellDef="let libraryItem"> {{libraryItem.value}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="bulk">
+      <th mat-header-cell *matHeaderCellDef id="libraryItemBulk"> Bulk </th>
+      <td mat-cell *matCellDef="let libraryItem"> {{libraryItem.bulk}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rarity">
+      <th mat-header-cell *matHeaderCellDef id="libraryItemRarity"> Rarity </th>
+      <td mat-cell *matCellDef="let libraryItem"> {{getRarityDescription(libraryItem.rarity)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="category" id="libraryItemCategory">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let libraryItem"> {{getCategoryDescription(libraryItem.category)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="level" id="libraryItemLevel">
+      <th mat-header-cell *matHeaderCellDef> Level </th>
+      <td mat-cell *matCellDef="let libraryItem"> {{libraryItem.level}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

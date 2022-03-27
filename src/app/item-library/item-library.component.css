@@ -1,0 +1,23 @@
+table {
+  width: 100%;
+}
+
+#ngView {
+  padding: 25px 100px 75px 100px;
+}
+
+.searchField {
+  display: block;
+}
+
+.dropdownFilter {
+  margin-right: 25px;
+}
+
+.mat-cell:not(:first-child) {
+  padding-left: 25px;
+}
+
+.mat-header-cell:not(:first-child) {
+  padding-left: 25px;
+}
